@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "px=false,pz=false": {
+      "model": "squidgame:block/bridge_glass"
+    },
+    "px=false,pz=true": {
+      "model": "squidgame:block/bridge_glass"
+    },
+    "px=true,pz=false": {
+      "model": "squidgame:block/bridge_glass"
+    },
+    "px=true,pz=true": {
+      "model": "squidgame:block/bridge_glass"
+    }
+  }
+}

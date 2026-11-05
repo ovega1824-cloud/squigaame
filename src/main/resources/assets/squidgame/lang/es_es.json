@@ -1,0 +1,9 @@
+{
+  "block.squidgame.block_one": "Bloque 1 (Inicio)",
+  "block.squidgame.block_two": "Bloque 2 (Meta)",
+  "itemGroup.squidgame": "Squid Game",
+  "item.squidgame.headphones": "Audífonos",
+  "block.squidgame.bridge_glass": "Cristal del puente (2x2)",
+  "item.squidgame.bridge_glass": "Cristal del puente (2x2)",
+  "item.squidgame.bridge_wand": "Palo verde del puente"
+}

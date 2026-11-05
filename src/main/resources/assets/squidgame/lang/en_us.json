@@ -1,0 +1,9 @@
+{
+  "block.squidgame.block_one": "Block 1 (Start)",
+  "block.squidgame.block_two": "Block 2 (Finish)",
+  "itemGroup.squidgame": "Squid Game",
+  "item.squidgame.headphones": "Headphones",
+  "block.squidgame.bridge_glass": "Bridge glass (2x2)",
+  "item.squidgame.bridge_glass": "Bridge glass (2x2)",
+  "item.squidgame.bridge_wand": "Green bridge stick"
+}

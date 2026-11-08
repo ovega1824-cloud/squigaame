@@ -1,6 +1,14 @@
 package com.squidgame;
 
 import net.minecraft.core.BlockPos;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.UUID;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.StringTag;
+import net.minecraft.nbt.Tag;
+import java.util.Set;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.level.saveddata.SavedData;
@@ -14,6 +22,15 @@ public class SGData extends SavedData {
     public BlockPos bridgeA;
     public BlockPos bridgeB;
     public String bridgeDim;
+    /** Bloques F que forman el área de la final (posiciones empaquetadas). */
+    public final Set<Long> finalBlocks = new HashSet<>();
+    public String finalDim;
+    /** Número (001-100) que se ve bajo el nombre de cada jugador. */
+    public final Map<UUID, Integer> numbers = new HashMap<>();
+    /** Jugadores con el nombre oculto (/nick hide). */
+    public final Set<UUID> hiddenNames = new HashSet<>();
+    /** Para apagar el mensaje de muerte de vanilla solo una vez por mundo. */
+    public boolean deathRuleApplied = false;
 
     public static SGData get(MinecraftServer server) {
         return server.overworld().getDataStorage().computeIfAbsent(SGData::load, SGData::new, "squidgame_lines");
@@ -41,6 +58,17 @@ public class SGData extends SavedData {
         setDirty();
     }
 
+    public void addFinalBlock(BlockPos pos, String dim) {
+        if (finalDim != null && !finalDim.equals(dim)) finalBlocks.clear();
+        finalDim = dim;
+        finalBlocks.add(pos.asLong());
+        setDirty();
+    }
+
+    public void removeFinalBlock(BlockPos pos) {
+        if (finalBlocks.remove(pos.asLong())) setDirty();
+    }
+
     public void clearIf(int number, BlockPos pos) {
         if (number == 1 && pos.equals(start)) {
             start = null;
@@ -66,6 +94,22 @@ public class SGData extends SavedData {
         if (tag.contains("bridgeA")) d.bridgeA = BlockPos.of(tag.getLong("bridgeA"));
         if (tag.contains("bridgeB")) d.bridgeB = BlockPos.of(tag.getLong("bridgeB"));
         if (tag.contains("bridgeDim")) d.bridgeDim = tag.getString("bridgeDim");
+        if (tag.contains("finalDim")) d.finalDim = tag.getString("finalDim");
+        for (long l : tag.getLongArray("finalBlocks")) d.finalBlocks.add(l);
+        CompoundTag nums = tag.getCompound("numbers");
+        for (String k : nums.getAllKeys()) {
+            try {
+                d.numbers.put(UUID.fromString(k), nums.getInt(k));
+            } catch (IllegalArgumentException ignored) {
+            }
+        }
+        for (Tag t : tag.getList("hiddenNames", Tag.TAG_STRING)) {
+            try {
+                d.hiddenNames.add(UUID.fromString(t.getAsString()));
+            } catch (IllegalArgumentException ignored) {
+            }
+        }
+        d.deathRuleApplied = tag.getBoolean("deathRuleApplied");
         return d;
     }
 
@@ -82,6 +126,18 @@ public class SGData extends SavedData {
         if (bridgeA != null) tag.putLong("bridgeA", bridgeA.asLong());
         if (bridgeB != null) tag.putLong("bridgeB", bridgeB.asLong());
         if (bridgeDim != null) tag.putString("bridgeDim", bridgeDim);
+        if (finalDim != null) tag.putString("finalDim", finalDim);
+        long[] arr = new long[finalBlocks.size()];
+        int i = 0;
+        for (Long l : finalBlocks) arr[i++] = l;
+        tag.putLongArray("finalBlocks", arr);
+        CompoundTag nums = new CompoundTag();
+        for (Map.Entry<UUID, Integer> e : numbers.entrySet()) nums.putInt(e.getKey().toString(), e.getValue());
+        tag.put("numbers", nums);
+        ListTag hid = new ListTag();
+        for (UUID u : hiddenNames) hid.add(StringTag.valueOf(u.toString()));
+        tag.put("hiddenNames", hid);
+        tag.putBoolean("deathRuleApplied", deathRuleApplied);
         return tag;
     }
 }

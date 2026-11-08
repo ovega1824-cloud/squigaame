@@ -12,5 +12,7 @@ public class ClientForgeEvents {
     @SubscribeEvent
     public static void onLogout(ClientPlayerNetworkEvent.LoggingOut event) {
         ClientAudio.clear();
+        ClientFinal.reset();
+        ClientNames.reset();
     }
 }

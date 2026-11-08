@@ -5,5 +5,7 @@
   "item.squidgame.headphones": "Headphones",
   "block.squidgame.bridge_glass": "Bridge glass (2x2)",
   "item.squidgame.bridge_glass": "Bridge glass (2x2)",
-  "item.squidgame.bridge_wand": "Green bridge stick"
+  "item.squidgame.bridge_wand": "Green bridge stick",
+  "block.squidgame.final_block": "F Block (Final)",
+  "item.squidgame.control_stick": "Purple control stick"
 }

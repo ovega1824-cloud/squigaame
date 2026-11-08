@@ -1,6 +1,34 @@
 {
-  "green_light": { "sounds": [ { "name": "squidgame:green_light", "stream": false } ] },
-  "red_light":   { "sounds": [ { "name": "squidgame:red_light",   "stream": false } ] },
-  "gunshot":     { "sounds": [ { "name": "squidgame:gunshot",     "stream": false } ] },
-  "success":     { "sounds": [ { "name": "squidgame:success",     "stream": false } ] }
+  "green_light": {
+    "sounds": [
+      {
+        "name": "squidgame:green_light",
+        "stream": false
+      }
+    ]
+  },
+  "red_light": {
+    "sounds": [
+      {
+        "name": "squidgame:red_light",
+        "stream": false
+      }
+    ]
+  },
+  "gunshot": {
+    "sounds": [
+      {
+        "name": "squidgame:gunshot",
+        "stream": false
+      }
+    ]
+  },
+  "success": {
+    "sounds": [
+      {
+        "name": "squidgame:success",
+        "stream": false
+      }
+    ]
+  }
 }

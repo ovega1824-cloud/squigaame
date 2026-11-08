@@ -206,13 +206,11 @@ public class BridgeGame {
             return 0;
         }
 
-        // Agrupar en filas a lo largo del puente; en cada fila uno es resistente y los demás falsos.
-        int minCoord = Integer.MAX_VALUE;
-        for (BlockPos o : origins) minCoord = Math.min(minCoord, axisX ? o.getX() : o.getZ());
+        // Cada peldaño (todos los paneles con la misma coordenada a lo largo del puente) tiene
+        // SIEMPRE un panel real, elegido al azar; los demás son falsos.
         Map<Integer, List<BlockPos>> rows = new TreeMap<>();
         for (BlockPos o : origins) {
-            int row = ((axisX ? o.getX() : o.getZ()) - minCoord) / 2;
-            rows.computeIfAbsent(row, k -> new ArrayList<>()).add(o);
+            rows.computeIfAbsent(axisX ? o.getX() : o.getZ(), k -> new ArrayList<>()).add(o);
         }
         panels.clear();
         byCell.clear();
@@ -388,8 +386,9 @@ public class BridgeGame {
             }
             f.ticks--;
             if (p.getY() < f.limitY || f.ticks <= 0) {
+                // cayó: queda fuera del juego, pero sin /kill (la caída sigue su curso normal)
                 falling.remove(id);
-                eliminate(p);
+                alive.remove(id);
             }
         }
 
@@ -467,32 +466,14 @@ public class BridgeGame {
         p.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, FREEZE_TICKS + 20, 255, false, false, false));
     }
 
-    private static void eliminate(ServerPlayer p) {
-        UUID id = p.getUUID();
-        alive.remove(id);
-        GameManager.eliminateExternal(p, startModes.getOrDefault(id, GameType.SURVIVAL));
-    }
-
-    /** Se acabó el tiempo: todos los cristales se rompen y los que no llegaron a la meta mueren. */
+    /** Se acabó el tiempo: todos los cristales se rompen y los jugadores simplemente caen (sin /kill). */
     private static void timeout(MinecraftServer server, ServerLevel level) {
-        Set<UUID> over = new HashSet<>();
-        for (UUID id : alive) {
-            ServerPlayer p = server.getPlayerList().getPlayer(id);
-            if (p != null && overBridge(p)) over.add(id);
-        }
         for (Panel pn : panels) breakPanel(level, pn);
-        for (UUID id : new ArrayList<>(alive)) {
+        for (UUID id : new ArrayList<>(doomed.keySet())) {
             ServerPlayer p = server.getPlayerList().getPlayer(id);
-            if (p == null) continue;
-            if (falling.containsKey(id)) continue;
-            doomed.remove(id);
-            p.removeEffect(MobEffects.MOVEMENT_SLOWDOWN);
-            if (over.contains(id)) {
-                falling.put(id, new Fall(p.getY() - 2.0D));
-            } else {
-                eliminate(p);
-            }
+            if (p != null) p.removeEffect(MobEffects.MOVEMENT_SLOWDOWN);
         }
+        doomed.clear();
         endGame(server, true);
     }
 

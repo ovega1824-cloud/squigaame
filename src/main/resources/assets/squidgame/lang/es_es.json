@@ -5,5 +5,7 @@
   "item.squidgame.headphones": "Audífonos",
   "block.squidgame.bridge_glass": "Cristal del puente (2x2)",
   "item.squidgame.bridge_glass": "Cristal del puente (2x2)",
-  "item.squidgame.bridge_wand": "Palo verde del puente"
+  "item.squidgame.bridge_wand": "Palo verde del puente",
+  "block.squidgame.final_block": "Bloque F (Final)",
+  "item.squidgame.control_stick": "Palo morado de control"
 }

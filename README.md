@@ -35,3 +35,26 @@ Al ser eliminado se ejecuta un /kill; al reaparecer vuelves al lugar donde moris
    - Al acabar el tiempo se rompen todos los cristales y mueren los que no pasaron el Bloque 2.
    - Quien pasa el Bloque 2 gana (pantalla verde y sonido de éxito).
 5. `/sg puntedecristal stop` detiene, revive y arregla el puente; `restore` solo arregla el puente; `revive` revive a los eliminados.
+
+## La final (v1.4.0)
+Solo quedan: el sistema de vidas, dejar tirado a un jugador y los bloques F.
+1. **Bloque F** (pestaña Squid Game): con ellos haz la forma del área. Si es un contorno cerrado, lo de adentro también cuenta.
+2. `/sg final set <jugador1> <jugador2>` da 3 vidas a cada uno y pone sus nombres y barras arriba de la pantalla (roja = jugador 1, azul = jugador 2).
+3. `/sg final start` empieza (los peleadores usan el modelo de la final); `/sg final stop` la detiene.
+4. Cada vez que te sacan del área pierdes una vida y vuelves adentro. Con 0 vidas: /kill.
+5. Con 1 corazón caes al suelo (muy lento, sin saltar, cámara con zoom, animación "tirado"). Al recuperar más de 3 corazones te paras.
+
+## Puente de cristal
+En cada peldaño (todos los paneles a lo largo del puente con la misma posición) SIEMPRE hay un panel real, elegido al azar. Ya no hay /kill: el que pisa uno falso o el que está encima al acabar el tiempo simplemente cae.
+
+## Palo morado (panel de control)
+Clic derecho con el **Palo morado de control** abre un panel (hay que ser operador para que los botones funcionen):
+- **Juegos:** iniciar / detener / revivir luz verde-luz roja y el puente (con el tiempo que escribas).
+- **Final:** poner jugadores, iniciar y detener.
+- **Jugadores:** poner / quitar número y ocultar / mostrar nombre.
+- **Comandos:** una lista de comandos (sin `/`) con una espera en segundos ANTES de cada uno. "Ejecutar" los lanza uno tras otro; "Detener" corta la secuencia. Se guarda en `config/squidgame_control.json`.
+
+## Nombres y números
+- `/nick hide <jugador>` oculta el nombre de ese jugador; `/nick show <jugador>` lo vuelve a mostrar.
+- `/numero <1-100> <jugador>` pone el número (se ve como #001) debajo del nombre; `/numero quitar <jugador>` lo quita.
+- Cuando muere un jugador sale en el chat: `Jugador #001 Nombre eliminado`. El mensaje normal de muerte se apaga una sola vez por mundo (regla showDeathMessages).

@@ -25,6 +25,12 @@ public class Net {
                 SoundPackets.ChunkPacket::encode, SoundPackets.ChunkPacket::decode, SoundPackets.ChunkPacket::handle);
         CHANNEL.registerMessage(3, SoundPackets.StopPacket.class,
                 SoundPackets.StopPacket::encode, SoundPackets.StopPacket::decode, SoundPackets.StopPacket::handle);
+        CHANNEL.registerMessage(4, FinalPackets.State.class,
+                FinalPackets.State::encode, FinalPackets.State::decode, FinalPackets.State::handle);
+        CHANNEL.registerMessage(5, ControlPackets.Sequence.class,
+                ControlPackets.Sequence::encode, ControlPackets.Sequence::decode, ControlPackets.Sequence::handle);
+        CHANNEL.registerMessage(6, ControlPackets.NameData.class,
+                ControlPackets.NameData::encode, ControlPackets.NameData::decode, ControlPackets.NameData::handle);
     }
 
     /** Le dice al cliente que ponga la pantalla verde. */

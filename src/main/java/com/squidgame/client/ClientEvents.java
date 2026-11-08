@@ -16,6 +16,7 @@ public class ClientEvents {
     public static void clientSetup(FMLClientSetupEvent event) {
         SoundLibrary.ensureFolder(); // crea .minecraft/sound
         ClientConfig.load();
+        ControlConfig.load();
     }
 
     @SubscribeEvent
@@ -35,5 +36,8 @@ public class ClientEvents {
             int a = Math.max(0, Math.min(255, (int) (alpha * 255.0F)));
             graphics.fill(0, 0, width, height, (a << 24) | 0x1EC83C);
         });
+        event.registerAboveAll("final_hud", (gui, graphics, partialTick, width, height) ->
+                FinalHud.render(graphics, width, height));
+
     }
 }

@@ -237,7 +237,7 @@ public class GameManager {
         red = false;
         refs.clear();
         RandomSource r = server.overworld().getRandom();
-        phaseLeft = 80 + r.nextInt(81); // 4 a 8 s
+        phaseLeft = 120 + r.nextInt(61); // 6 a 9 s (el audio nuevo dura 5.5 s)
         playToAll(server, ModRegistry.GREEN_LIGHT.get());
     }
 

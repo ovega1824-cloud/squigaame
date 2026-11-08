@@ -9,6 +9,10 @@ public class ClientHooks {
         flashStart = System.currentTimeMillis();
     }
 
+    public static void openControl() {
+        Minecraft.getInstance().setScreen(new ControlScreen());
+    }
+
     public static void openMenu() {
         Minecraft.getInstance().setScreen(new HeadphonesScreen());
     }

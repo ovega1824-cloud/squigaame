@@ -33,6 +33,10 @@ public class ModRegistry {
             () -> new LineBlock(2, BlockBehaviour.Properties.of()
                     .mapColor(MapColor.COLOR_GREEN).strength(1.5F, 6.0F).sound(SoundType.STONE)));
 
+    public static final RegistryObject<Block> FINAL_BLOCK = BLOCKS.register("final_block",
+            () -> new FinalBlock(BlockBehaviour.Properties.of()
+                    .mapColor(MapColor.COLOR_BLACK).strength(1.5F, 6.0F).sound(SoundType.STONE)));
+
     public static final RegistryObject<Block> BRIDGE_GLASS = BLOCKS.register("bridge_glass",
             () -> new BridgeGlassBlock(BlockBehaviour.Properties.of()
                     .mapColor(MapColor.NONE).strength(0.3F).sound(SoundType.GLASS).noOcclusion().noLootTable()
@@ -46,10 +50,16 @@ public class ModRegistry {
     public static final RegistryObject<Item> BRIDGE_WAND = ITEMS.register("bridge_wand",
             () -> new BridgeWandItem(new Item.Properties().stacksTo(1)));
 
+    public static final RegistryObject<Item> FINAL_BLOCK_ITEM = ITEMS.register("final_block",
+            () -> new BlockItem(FINAL_BLOCK.get(), new Item.Properties()));
+
     public static final RegistryObject<Item> BLOCK_ONE_ITEM = ITEMS.register("block_one",
             () -> new BlockItem(BLOCK_ONE.get(), new Item.Properties()));
     public static final RegistryObject<Item> BLOCK_TWO_ITEM = ITEMS.register("block_two",
             () -> new BlockItem(BLOCK_TWO.get(), new Item.Properties()));
+
+    public static final RegistryObject<Item> CONTROL_STICK = ITEMS.register("control_stick",
+            () -> new ControlStickItem(new Item.Properties().stacksTo(1)));
 
     public static final RegistryObject<Item> HEADPHONES = ITEMS.register("headphones",
             () -> new HeadphonesItem(new Item.Properties().stacksTo(1)));
@@ -69,6 +79,8 @@ public class ModRegistry {
                         output.accept(HEADPHONES.get());
                         output.accept(BRIDGE_GLASS_ITEM.get());
                         output.accept(BRIDGE_WAND.get());
+                        output.accept(FINAL_BLOCK_ITEM.get());
+                        output.accept(CONTROL_STICK.get());
                     })
                     .build());
 
